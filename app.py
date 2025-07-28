@@ -129,7 +129,15 @@ def get_salario():
 
 @app.post("/salario")
 def post_salario():
-    salario = flask.request.form['salario']
+    slr  = flask.request.form.get("Salario")
+
+    with sqlite3.Connection("banco.db") as conn:
+        sql_salario = '''
+        INSERT INTO salario (slr) VALUES (?);
+        ''' 
+        conn.execute(sql_salario, (slr))
+
+    return flask.redirect("/controle")
     
 
 app.run(host='0.0.0.0', debug=True)

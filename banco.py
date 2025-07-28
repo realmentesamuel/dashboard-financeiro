@@ -19,7 +19,22 @@ CREATE TABLE IF NOT EXISTS produtos (
 	nome TEXT NOT NULL
 );
 '''
+sql_despesas = '''
+CREATE TABLE IF NOT EXISTS despesas (
+    id INTEGER PRIMARY KEY,
+    valor REAL NOT NULL
+);
+'''
 
+sql_salario = '''
+CREATE TABLE IF NOT EXISTS salario (
+    id INTEGER PRIMARY KEY DEFAULT 1,
+    slr REAL NOT NULL
+);
+'''
+
+conn.execute(sql_salario)
+conn.execute(sql_despesas)
 conn.execute(sql_criar_tabela_usuarios)
 conn.execute(sql_produtos)
 conn.commit()
