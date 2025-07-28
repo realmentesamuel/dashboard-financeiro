@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
+    <style>
+    form {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+    }    
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/controle">Controle de Gastos</a>
+            <a href="/compras">Compras</a>
+            {% if session["login"] %}
+            <a href="/cadastrar">Cadastrar</a>    
+            <a href="/logout">Logout</a>    
+            {% else %}
+                <a href="/login">Login</a>
+            {% endif %}    
+        </nav>
+        </header>
+    <h1>Cadastro de Gastos</h1>
+<form action="/cadastrar" method="post">
+    Nome: <input type="text" name="nome">
+    Preço: <input type="text" name="preco">
+    Img: <input type="text" name="img">
+    <input type="submit" value="Cadastrar">
+</form>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Controle de Gastos</title>
+
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
+    <style>
+    form {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+    }    
+    </style>
+</head>
+<body>
+
+<header>
+<nav>
+    <a href="/">Home</a>
+    <a href="/controle">Controle de Gastos</a>
+    <a href="/compras">Compras</a>
+    {% if session["login"] %}
+    <a href="/cadastrar">Cadastrar</a>    
+    <a href="/logout">Logout</a>    
+    {% else %}
+        <a href="/login">Login</a>
+    {% endif %}    
+</nav>
+</header>
+
+    <h1>Controle de Gastos</h1>    
+    {% for produto in produtos %}
+    <article>
+        <aside>
+        <img src="/static/img/{{ produto[0] }}">    
+        </aside>
+        <h3> {{ produto[2] }} </h3>
+        <h4>{{produto[1]}}</h4>
+        {% if session['login'] %}
+        <a href="/excluir/{{ produto[3] }}">Excluir</a>
+        - <a href="/editar/{{ produto[3] }}">Editar</a>
+        {% endif %}
+    </article>
+    {% endfor %}
+</body>
+</html>
