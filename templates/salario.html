@@ -27,6 +27,12 @@
     {% endif %}    
 </nav>
 </header>
-<h1>Sistema de Controle de Gastos</h1>
+<body>
+    <h1>Coloque seu salário</h1>
+
+    <form action="/salario" method="post">
+        Salário: <input type="number" name="salario">
+        <input type="submit" value="Salario">
+    </form>
 </body>
 </html>

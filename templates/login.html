@@ -3,8 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
+    <style>
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+        }    
+        </style>
 </head>
+<body>
+<header>
+<nav>
+    <a href="/">Home</a>
+    <a href="/controle">Controle de Gastos</a>
+    <a href="/salario">Salário</a>
+    {% if session["login"] %}
+    <a href="/cadastrar">Cadastrar</a>    
+    <a href="/logout">Logout</a>    
+    {% else %}
+        <a href="/login">Login</a>
+    {% endif %}    
+</nav>
+</header>
 <body>
     <h1>Login</h1>
 

@@ -72,17 +72,17 @@ def post_cadastrar():
 
     return flask.redirect("/controle")
 
-@app.get("/editar/<id_gasto>")
-def editar_produto(id_gasto):
+@app.get("/editar/<id_produto>")
+def editar_produto(id_produto):
     with sqlite3.Connection('banco.db') as conn:
-        sql_dados_gastos = f'''
+        sql_dados_produto = f'''
             SELECT id, nome, preco, img
             FROM produtos 
-            WHERE id = {id_gasto}
+            WHERE id = {id_produto}
             '''
-        registro_gastos = conn.execute(sql_dados_gastos)
-        id, nome, preco, img = next(registro_gastos)
-        dados_gasto = {
+        registro_produto = conn.execute(sql_dados_produto)
+        id, nome, preco, img = next(registro_produto)
+        dados_produto = {
             "id": id,
             "nome": nome,
             "preco": preco,
@@ -90,7 +90,7 @@ def editar_produto(id_gasto):
         }
         
         return flask.render_template("editar_gasto.html",
-                                     gasto = dados_gasto)
+                                     produto = dados_produto)
 
 @app.post("/atualizar")
 def atualizar_produto():
@@ -103,13 +103,33 @@ def atualizar_produto():
     UPDATE produtos 
     SET img="{img}",
         nome="{nome}",
-        preco="{preco}",
+        preco="{preco}"
     WHERE produtos.id = {id}    
 '''
     with sqlite3.Connection('banco.db') as conn:
         conn.execute(sql_atualizar_produto)
         conn.commit()
 
+    return flask.redirect("/controle")
+        
+@app.get("/excluir/<id_produto>")
+def excluir_produto(id_produto):
+    sql_excluir_produto = f'''
+    DELETE FROM produtos WHERE id = {id_produto}
+    '''
+    with sqlite3.Connection('banco.db') as conn:
+        conn.execute(sql_excluir_produto)
+        conn.commit
+    
     return flask.redirect("/")
+
+@app.get("/salario")
+def get_salario():
+    return flask.render_template("salario.html")
+
+@app.post("/salario")
+def post_salario():
+    salario = flask.request.form['salario']
+    
 
 app.run(host='0.0.0.0', debug=True)
