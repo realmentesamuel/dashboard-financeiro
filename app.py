@@ -153,7 +153,7 @@ def post_salario():
     except ValueError:
         return None
     
-    return flask.redirect("/controle")
+    return flask.render_template('salario.html', calculo=calculo)
     
 
 app.run(host='0.0.0.0', debug=True)
