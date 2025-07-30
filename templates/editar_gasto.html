@@ -17,10 +17,10 @@
     <header>
         <nav>
             <a href="/">Home</a>
+            {% if session["login"] %}
             <a href="/controle">Controle de Gastos</a>
             <a href="/salario">Salário</a>
-            {% if session["login"] %}
-            <a href="/cadastrar">Cadastrar</a>    
+            <a href="/cadastrar">Cadastrar Gastos</a>    
             <a href="/logout">Logout</a>    
             {% else %}
                 <a href="/login">Login</a>

@@ -13,16 +13,10 @@ CREATE TABLE IF NOT EXISTS usuarios (
 
 sql_produtos = '''
 CREATE TABLE IF NOT EXISTS produtos (
-    id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
 	img TEXT NOT NULL,
-	preco TEXT NOT NULL,
+	preco REAL NOT NULL,
 	nome TEXT NOT NULL
-);
-'''
-sql_despesas = '''
-CREATE TABLE IF NOT EXISTS despesas (
-    id INTEGER PRIMARY KEY,
-    valor REAL NOT NULL
 );
 '''
 
@@ -34,7 +28,6 @@ CREATE TABLE IF NOT EXISTS salario (
 '''
 
 conn.execute(sql_salario)
-conn.execute(sql_despesas)
 conn.execute(sql_criar_tabela_usuarios)
 conn.execute(sql_produtos)
 conn.commit()

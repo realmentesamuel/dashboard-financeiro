@@ -129,14 +129,30 @@ def get_salario():
 
 @app.post("/salario")
 def post_salario():
-    slr  = flask.request.form.get("salario")
-
-    with sqlite3.Connection("banco.db") as conn:
-        sql_salario = '''
-        INSERT INTO salario (slr) VALUES (?,?);
-        ''' 
-        conn.execute(sql_salario, (slr))
-
+    
+    try:
+        valor  = float(flask.request.form.get("salario"))
+        with sqlite3.Connection("banco.db") as conn:
+            sql_salario = "REPLACE INTO salario (id, slr) VALUES (1, ?)";
+            conn.execute(sql_salario, (valor,))
+    except ValueError:
+        return flask.redirect('/')
+    
+    try:
+        with sqlite3.Connection("banco.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT preco FROM produtos")
+            precos = cursor.fetchall()
+            total = 0.0
+            for preco in precos:
+                total += float(str(preco[0]).replace(',','.'))
+            calculo = valor - total
+            
+            print(calculo)
+            
+    except ValueError:
+        return None
+    
     return flask.redirect("/controle")
     
 
