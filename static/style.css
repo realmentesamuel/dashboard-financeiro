@@ -1,0 +1,12 @@
+.form-control:focus {
+    border-color: #ffd900; /* Example: Bootstrap's primary blue */
+    box-shadow: 0 0 0 0.25rem rgba(214, 165, 3, 0.25); /* Example: Blue glow */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: auto;
+}    
+

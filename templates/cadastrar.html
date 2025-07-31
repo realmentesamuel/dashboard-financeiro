@@ -4,35 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar</title>
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
-    <style>
-    form {
-        display: flex;
-        flex-direction: column;
-        width: 300px;
-    }    
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <header>
-        <nav>
-            <a href="/">Home</a>
-            {% if session["login"] %}
-            <a href="/controle">Controle de Gastos</a>
-            <a href="/salario">Salário</a>
-            <a href="/cadastrar">Cadastrar Gastos</a>    
-            <a href="/logout">Logout</a>    
-            {% else %}
-                <a href="/login">Login</a>
-            {% endif %}    
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container">
+              <a class="navbar-brand me-2" href="/">
+                <img
+                  src="/static/img/cash.png"
+                  height="32"
+                  alt="Logo"
+                  loading="lazy"
+                  style="margin-top: -5px;"
+                />
+              </a>
+          
+              <button
+                data-mdb-collapse-init
+                class="navbar-toggler"
+                type="button"
+                data-mdb-target="#navbarButtonsExample"
+                aria-controls="navbarButtonsExample"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <i class="fas fa-bars"></i>
+              </button>
+          
+              <div class="collapse navbar-collapse" id="navbarButtonsExample">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link" style="color: #ffd900;" href="/">Home</a>
+                  </li>
+                </ul>
+          
+                <div class="d-flex align-items-center">
+                    {% if session["login"] %}
+                    <a href="/controle" class="btn btn-outline-warning me-2" role="button">Controle de Gastos</a>
+                    <a href="/salario" class="btn btn-outline-warning me-2" role="button">Salário</a>
+                    <a href="/cadastrar" class="btn btn-outline-warning me-2" role="button">Cadastrar Gastos</a>    
+                    <a href="/logout" class="btn btn-outline-warning me-2" role="button">Logout</a>    
+                    {% else %}
+                        <a href="/login" class="btn btn-outline-warning me-2" role="button">Login</a>
+                    {% endif %}    
+                </div>
+              </div>
+            </div>
         </nav>
         </header>
-    <h1>Cadastro de Gastos</h1>
-<form action="/cadastrar" method="post">
-    Nome: <input type="text" name="nome">
-    Preço: <input type="text" name="preco">
-    Img: <input type="text" name="img">
-    <input type="submit" value="Cadastrar">
-</form>
+        <h2 class="text-center mb-3 mt-3">Coloque a sua despesa.</h1>
+ 
+<div class="mb-3 p-3">          
+  <form action="/cadastrar" method="post">
+      <label class="form-label mb-2 mt-2 ">Nome:</label>
+      <input type="text" class="form-control" name="nome">
+      <label class="form-label mb-2 mt-2 ">Preço:</label> 
+      <input type="text" class="form-control" name="preco">
+      <label class="form-label mb-2 mt-2 ">Imagem:</label> 
+      <input type="text" class="form-control" name="img">
+      <input type="submit" class="btn btn-outline-warning mt-3" value="Cadastrar">
+  </form> 
+</div>
 </body>
 </html>
