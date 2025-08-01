@@ -154,6 +154,85 @@ def post_salario():
         return None
     
     return flask.render_template('salario.html', calculo=calculo)
+
+@app.get('/compras')
+def get_compras():
+    sql_select_gastos = '''
+    SELECT img, preco, nome, id FROM compras ORDER BY preco DESC;
+'''
+    with sqlite3.Connection('banco.db') as conn:
+        lista_de_compras = conn.execute(sql_select_gastos)
     
+    return flask.render_template("compras.html", compras=lista_de_compras)
+
+@app.get("/cadastrar-compras")
+def get_cadastrar_compras():
+    return flask.render_template("cadastrar_compras.html")
+
+@app.post("/cadastrar-compras")
+def post_cadastrar_compras():
+
+    nome  = flask.request.form.get("nome")
+    preco = flask.request.form.get("preco")
+    img = flask.request.form.get("img")
+
+    with sqlite3.Connection("banco.db") as conn:
+        sql_inserir_compra = '''
+        INSERT INTO compras (nome, preco, img) VALUES (?,?,?);
+        ''' 
+        conn.execute(sql_inserir_compra, (nome, preco, img))
+
+    return flask.redirect("/compras")
+
+@app.get("/editar-compras/<id_compras>")
+def editar_compras(id_compras):
+    with sqlite3.Connection('banco.db') as conn:
+        sql_dados_compras = f'''
+            SELECT id, nome, preco, img
+            FROM compras 
+            WHERE id = {id_compras}
+            '''
+        registro_compras = conn.execute(sql_dados_compras)
+        id, nome, preco, img = next(registro_compras)
+        dados_compras = {
+            "id": id,
+            "nome": nome,
+            "preco": preco,
+            "img": img,
+        }
+        
+        return flask.render_template("editar_compra.html",
+                                     produto = dados_compras)
+
+@app.post("/atualizar-compras")
+def atualizar_compras():
+    id = flask.request.form['id']
+    nome = flask.request.form['nome']
+    preco = flask.request.form['preco']
+    img = flask.request.form['img']
+    
+    sql_atualizar_compra = f'''
+    UPDATE compras 
+    SET img="{img}",
+        nome="{nome}",
+        preco="{preco}"
+    WHERE produtos.id = {id}    
+'''
+    with sqlite3.Connection('banco.db') as conn:
+        conn.execute(sql_atualizar_compra)
+        conn.commit()
+
+    return flask.redirect("/compras")
+        
+@app.get("/excluir-compras/<id_compras>")
+def excluir_compras(id_compras):
+    sql_excluir_compras = f'''
+    DELETE FROM compras WHERE id = {id_compras}
+    '''
+    with sqlite3.Connection('banco.db') as conn:
+        conn.execute(sql_excluir_compras)
+        conn.commit
+    
+    return flask.redirect("/compras")
 
 app.run(host='0.0.0.0', debug=True)

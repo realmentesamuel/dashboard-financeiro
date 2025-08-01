@@ -20,6 +20,15 @@ CREATE TABLE IF NOT EXISTS produtos (
 );
 '''
 
+sql_compras = '''
+CREATE TABLE IF NOT EXISTS compras (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+	img TEXT NOT NULL,
+	preco REAL NOT NULL,
+	nome TEXT NOT NULL
+);
+'''
+
 sql_salario = '''
 CREATE TABLE IF NOT EXISTS salario (
     id INTEGER PRIMARY KEY DEFAULT 1,
@@ -27,6 +36,7 @@ CREATE TABLE IF NOT EXISTS salario (
 );
 '''
 
+conn.execute(sql_compras)
 conn.execute(sql_salario)
 conn.execute(sql_criar_tabela_usuarios)
 conn.execute(sql_produtos)
@@ -54,6 +64,15 @@ lista_de_usuarios = [
 ]
 
 conn.executemany(sql_insert_usuarios, lista_de_usuarios)
+
+sql_insert_compras = '''
+INSERT INTO compras (img, preco, nome) VALUES (?, ?, ?);
+'''
+lista_de_compras = [
+    ('4.png','4000,00','Celular')
+]
+
+conn.executemany(sql_insert_compras, lista_de_compras)
 
 conn.commit()
 conn.close()

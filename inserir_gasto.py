@@ -10,3 +10,13 @@ match sys.argv[1:]:
             ''' 
             conn.execute(sql_inserir_gastos, (nome, preco, img))
             print('inserido.')
+            
+match sys.argv[1:]:
+
+    case ['inserir',nome, preco, img]:
+        with sqlite3.Connection("banco.db") as conn:
+            sql_inserir_compras = '''
+            INSERT INTO compras (nome, preco, img) VALUES (?,?,?);
+            ''' 
+            conn.execute(sql_inserir_compras, (nome, preco, img))
+            print('inserido.')
