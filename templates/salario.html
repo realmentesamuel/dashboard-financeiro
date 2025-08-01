@@ -66,7 +66,13 @@
         <input type="submit" class="btn btn-outline-warning mt-3" value="Enviar">
     </form>
 </div>
-    <h4 class="text-center mt-4">O restante do seu salário com as suas despesas é de: R$ {{calculo}}</h4>
-    <h4 class="text-center mt-4">Você pode pagar 10 parcelas de R$ {{ teste }} para comprar toda a sua lista de compras. </h4>
+<h4 class="text-center mt-4">O restante do seu salário com as suas despesas é de: R$ {{session["calculo"]}}</h4>
+{% if session["calculo"] >= session["teste"] %}
+<h4 class="text-center mt-4">Você pode pagar 10 parcelas de R$ {{ session["teste"] }} para comprar toda a sua lista de compras. </h4>
+
+{% else %}
+<h4 class="text-center mt-4">Você não consegue comprar sua lista de compras em 10 parcelas.</h4>
+{% endif %}
+
 </body>
 </html>

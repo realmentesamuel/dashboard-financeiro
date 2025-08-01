@@ -32,7 +32,9 @@ def post_login():
         try:
             login, _, email = next(dados_usuario)
             flask.session["login"] = login
-            flask.session["email"] = email        
+            flask.session["email"] = email
+            flask.session["calculo"] = 0
+            flask.session["teste"] = 0
         except StopIteration:
             return flask.redirect("/")
         
@@ -147,7 +149,9 @@ def post_salario():
             for preco in precos:
                 total += float(str(preco[0]).replace(',','.'))
             calculo = valor - total
+            flask.session["calculo"] = calculo
             
+            flask.session["calculo"]
             print(calculo)
             
     except ValueError:
@@ -162,6 +166,9 @@ def post_salario():
             for preco in precos_compras:
                 total_compras += float(str(preco[0]).replace(',','.'))
             teste = total_compras / 10
+            flask.session["teste"] = teste
+            
+            
     except ValueError:
         return flask.redirect('/')
     return flask.render_template('salario.html', calculo=calculo, teste=teste)
