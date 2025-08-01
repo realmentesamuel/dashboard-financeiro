@@ -151,9 +151,20 @@ def post_salario():
             print(calculo)
             
     except ValueError:
-        return None
+        return flask.redirect('/')
     
-    return flask.render_template('salario.html', calculo=calculo)
+    try:
+        with sqlite3.Connection("banco.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT preco FROM compras")
+            precos_compras = cursor.fetchall()
+            total_compras = 0.0
+            for preco in precos_compras:
+                total_compras += float(str(preco[0]).replace(',','.'))
+            teste = total_compras / 10
+    except ValueError:
+        return flask.redirect('/')
+    return flask.render_template('salario.html', calculo=calculo, teste=teste)
 
 @app.get('/compras')
 def get_compras():
